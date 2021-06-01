@@ -1,0 +1,83 @@
+mysql> show tables
+    -> ;
++-------------------+
+| Tables_in_onebill |
++-------------------+
+| charvarchar       |
+| customer          |
+| employee          |
+| item              |
+| orders            |
+| person            |
+| salesnew          |
++-------------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from person;
++----+--------+--------+------------------+
+| id | name   | salary | email            |
++----+--------+--------+------------------+
+|  1 | Vighna |  35000 | vighna@gmail.com |
+|  3 | Kumar  |  35000 | kumar@gmail.com  |
+|  5 | raj    |  35000 | raj@gmail.com    |
+|  7 | ram    |  30000 | ram@gmail.com    |
++----+--------+--------+------------------+
+4 rows in set (0.07 sec)
+
+mysql> select * from item;
+Empty set (0.00 sec)
+
+mysql> select * from customer;
++------+-----------+-------------+
+| c_id | cust_name | designation |
++------+-----------+-------------+
+|    1 | Rohan     | Engineer    |
+|    2 | Raj       | Tester      |
+|    3 | Rohit     | Analyst     |
+|    4 | Ragul     | HR          |
++------+-----------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from person left join customer on customer.c_id=person.id union select * from person right join customer on customer.c_id=person.id;
++------+--------+--------+------------------+------+-----------+-------------+
+| id   | name   | salary | email            | c_id | cust_name | designation |
++------+--------+--------+------------------+------+-----------+-------------+
+|    1 | Vighna |  35000 | vighna@gmail.com |    1 | Rohan     | Engineer    |
+|    3 | Kumar  |  35000 | kumar@gmail.com  |    3 | Rohit     | Analyst     |
+|    5 | raj    |  35000 | raj@gmail.com    | NULL | NULL      | NULL        |
+|    7 | ram    |  30000 | ram@gmail.com    | NULL | NULL      | NULL        |
+| NULL | NULL   |   NULL | NULL             |    2 | Raj       | Tester      |
+| NULL | NULL   |   NULL | NULL             |    4 | Ragul     | HR          |
++------+--------+--------+------------------+------+-----------+-------------+
+6 rows in set (0.05 sec)
+
+mysql> select * from person left join customer on customer.c_id=person.id union all select * from person right join customer on customer.c_id=person.id;
++------+--------+--------+------------------+------+-----------+-------------+
+| id   | name   | salary | email            | c_id | cust_name | designation |
++------+--------+--------+------------------+------+-----------+-------------+
+|    1 | Vighna |  35000 | vighna@gmail.com |    1 | Rohan     | Engineer    |
+|    3 | Kumar  |  35000 | kumar@gmail.com  |    3 | Rohit     | Analyst     |
+|    5 | raj    |  35000 | raj@gmail.com    | NULL | NULL      | NULL        |
+|    7 | ram    |  30000 | ram@gmail.com    | NULL | NULL      | NULL        |
+|    1 | Vighna |  35000 | vighna@gmail.com |    1 | Rohan     | Engineer    |
+|    3 | Kumar  |  35000 | kumar@gmail.com  |    3 | Rohit     | Analyst     |
+| NULL | NULL   |   NULL | NULL             |    2 | Raj       | Tester      |
+| NULL | NULL   |   NULL | NULL             |    4 | Ragul     | HR          |
++------+--------+--------+------------------+------+-----------+-------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from person left join customer on customer.c_id=person.id union all select * from person right join customer on customer.c_id=person.id is null;
++------+--------+--------+------------------+------+-----------+-------------+
+| id   | name   | salary | email            | c_id | cust_name | designation |
++------+--------+--------+------------------+------+-----------+-------------+
+|    1 | Vighna |  35000 | vighna@gmail.com |    1 | Rohan     | Engineer    |
+|    3 | Kumar  |  35000 | kumar@gmail.com  |    3 | Rohit     | Analyst     |
+|    5 | raj    |  35000 | raj@gmail.com    | NULL | NULL      | NULL        |
+|    7 | ram    |  30000 | ram@gmail.com    | NULL | NULL      | NULL        |
+| NULL | NULL   |   NULL | NULL             |    1 | Rohan     | Engineer    |
+| NULL | NULL   |   NULL | NULL             |    2 | Raj       | Tester      |
+| NULL | NULL   |   NULL | NULL             |    3 | Rohit     | Analyst     |
+| NULL | NULL   |   NULL | NULL             |    4 | Ragul     | HR          |
++------+--------+--------+------------------+------+-----------+-------------+
+8 rows in set (0.00 sec)
+

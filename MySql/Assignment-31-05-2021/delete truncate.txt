@@ -1,0 +1,81 @@
+mysql> use onebill;
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_onebill |
++-------------------+
+| charvarchar       |
+| customer          |
+| employee          |
+| item              |
+| orders            |
+| person            |
+| salesnew          |
++-------------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from charvarchar;
++--------+------+
+| name   | dept |
++--------+------+
+| Vighna | IT   |
+| Rajan  | CSE  |
++--------+------+
+2 rows in set (0.00 sec)
+
+mysql> delete from charvarchar where name='rajan';
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select * from charvarchar;
++--------+------+
+| name   | dept |
++--------+------+
+| Vighna | IT   |
++--------+------+
+1 row in set (0.00 sec)
+
+mysql> truncate table charvarchar;
+Query OK, 0 rows affected (0.24 sec)
+
+mysql> select * from charvarchar;
+Empty set (0.00 sec)
+
+mysql> describe charvarchar;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| name  | varchar(10) | YES  |     | NULL    |       |
+| dept  | char(5)     | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into charvarchar values('Vighna','IT');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into charvarchar values('rajan','cse');
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select * from charvarchar;
++--------+------+
+| name   | dept |
++--------+------+
+| Vighna | IT   |
+| rajan  | cse  |
++--------+------+
+2 rows in set (0.00 sec)
+
+mysql> truncate table charvarchar;
+Query OK, 0 rows affected (0.24 sec)
+
+mysql> select * from charvarchar;
+Empty set (0.00 sec)
+
+mysql> describe charvarchar;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| name  | varchar(10) | YES  |     | NULL    |       |
+| dept  | char(5)     | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+

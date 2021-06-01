@@ -1,0 +1,56 @@
+mysql> use onebill;
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_onebill |
++-------------------+
+| charvarchar       |
+| customer          |
+| employee          |
+| item              |
+| orders            |
+| person            |
+| salesnew          |
++-------------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from employee;
++--------+-----------+-------------------+------------+------------+------------+--------+------+------+-------------------+
+| emp_id | name      | email             | mobile     | doj        | dob        | gender | exp  | dept | designation       |
++--------+-----------+-------------------+------------+------------+------------+--------+------+------+-------------------+
+|      1 | Rajan     | rajan@gmail.com   | 9865157679 | 2020-06-20 | 1998-01-02 | male   |    2 | A    | Software Engineer |
+|      2 | Raji      | raji@gmail.com    | 9789457679 | 2017-04-02 | 1990-03-05 | female |    7 | B    | Tester            |
+|      3 | Rahul     | rahul@gmail.com   | 9789429579 | 2018-05-28 | 1991-06-30 | male   |    3 | B    | Tester            |
+|      4 | Ram       | ram@gmail.com     | 9863457679 | 2015-03-02 | 1989-12-12 | female |    7 | A    | Software Engineer |
+|      5 | Vighna    | vighna@icloud.com | 9865157779 | 2021-05-19 | 1999-08-02 | male   |    1 | B    | Software Engineer |
+|      6 | Rakshitha | rak@gmail.com     | 9789482579 | 2018-06-09 | 1990-09-09 | female |    6 | C    | Admin             |
++--------+-----------+-------------------+------------+------------+------------+--------+------+------+-------------------+
+6 rows in set (0.00 sec)
+
+mysql> select count(gender), dept from employee where gender='female' group by dept;
++---------------+------+
+| count(gender) | dept |
++---------------+------+
+|             1 | A    |
+|             1 | B    |
+|             1 | C    |
++---------------+------+
+3 rows in set (0.00 sec)
+
+mysql> select count(gender), dept from employee where gender='male' group by dept;
++---------------+------+
+| count(gender) | dept |
++---------------+------+
+|             1 | A    |
+|             2 | B    |
++---------------+------+
+2 rows in set (0.00 sec)
+
+mysql> select count(gender), dept from employee where gender='male' group by dept having count(gender)=2;
++---------------+------+
+| count(gender) | dept |
++---------------+------+
+|             2 | B    |
++---------------+------+
+1 row in set (0.00 sec)
+

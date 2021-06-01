@@ -1,0 +1,58 @@
+mysql> delimiter //
+mysql> create trigger t1
+    -> after insert
+    -> on salesnew for each row
+    -> begin
+    -> declare sold_item int;
+    -> declare sold_id int;
+    -> set sold_item = new.qtysold;
+    -> set sold_id = new.itemid;
+    -> update item set quantity=quantity-sold_item where itemid=sold_id;
+    -> end//
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> delimiter ;
+mysql> select * from item;
++--------+-------------------+----------+-------+----------+
+| itemid | itemdesc          | quantity | price | category |
++--------+-------------------+----------+-------+----------+
+|      1 | iphone            |       10 | 50000 | phone    |
+|      2 | rockerz 550       |        2 | 20000 | speaker  |
+|      4 | lightning charger |       10 |   200 | charger  |
++--------+-------------------+----------+-------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from salesnew;
++-----+--------+---------+-------+--------+
+| sid | itemid | qtysold | price | total  |
++-----+--------+---------+-------+--------+
+| 201 |      1 |       2 | 50000 | 100000 |
+| 202 |      2 |       1 |  2000 |   2000 |
+| 203 |      4 |       5 |   200 |   1000 |
++-----+--------+---------+-------+--------+
+3 rows in set (0.00 sec)
+
+mysql> insert into salesnew values(204,4,4,200,800);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> select * from item;
++--------+-------------------+----------+-------+----------+
+| itemid | itemdesc          | quantity | price | category |
++--------+-------------------+----------+-------+----------+
+|      1 | iphone            |       10 | 50000 | phone    |
+|      2 | rockerz 550       |        2 | 20000 | speaker  |
+|      4 | lightning charger |        6 |   200 | charger  |
++--------+-------------------+----------+-------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from salesnew;
++-----+--------+---------+-------+--------+
+| sid | itemid | qtysold | price | total  |
++-----+--------+---------+-------+--------+
+| 201 |      1 |       2 | 50000 | 100000 |
+| 202 |      2 |       1 |  2000 |   2000 |
+| 203 |      4 |       5 |   200 |   1000 |
+| 204 |      4 |       4 |   200 |    800 |
++-----+--------+---------+-------+--------+
+4 rows in set (0.00 sec)
+

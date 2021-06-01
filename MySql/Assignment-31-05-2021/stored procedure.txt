@@ -1,0 +1,73 @@
+mysql> select * from employee;
++--------+-----------+-------------------+------------+------------+------------+--------+------+------+-------------------+---------+
+| emp_id | name      | email             | mobile     | doj        | dob        | gender | exp  | dept | designation       | salary  |
++--------+-----------+-------------------+------------+------------+------------+--------+------+------+-------------------+---------+
+|      1 | Rajan     | rajan@gmail.com   | 9865157679 | 2020-06-20 | 1998-01-02 | male   |    2 | A    | Software Engineer |  400000 |
+|      2 | Raji      | raji@gmail.com    | 9789457679 | 2017-04-02 | 1990-03-05 | female |    7 | B    | Tester            |  700000 |
+|      3 | Rahul     | rahul@gmail.com   | 9789429579 | 2018-05-28 | 1991-06-30 | male   |    3 | B    | Tester            |  400000 |
+|      4 | Ram       | ram@gmail.com     | 9863457679 | 2015-03-02 | 1989-12-12 | female |    7 | A    | Software Engineer | 1200000 |
+|      5 | Vighna    | vighna@icloud.com | 9865157779 | 2021-05-19 | 1999-08-02 | male   |    1 | B    | Software Engineer |  350000 |
+|      6 | Rakshitha | rak@gmail.com     | 9789482579 | 2018-06-09 | 1990-09-09 | female |    6 | C    | Admin             | 1100000 |
++--------+-----------+-------------------+------------+------------+------------+--------+------+------+-------------------+---------+
+6 rows in set (0.00 sec)
+
+mysql> describe employee;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| emp_id      | int(11)      | NO   | PRI | NULL    |       |
+| name        | varchar(100) | YES  |     | NULL    |       |
+| email       | varchar(50)  | YES  |     | NULL    |       |
+| mobile      | mediumtext   | YES  |     | NULL    |       |
+| doj         | date         | YES  |     | NULL    |       |
+| dob         | date         | YES  |     | NULL    |       |
+| gender      | varchar(10)  | YES  |     | NULL    |       |
+| exp         | int(11)      | YES  |     | NULL    |       |
+| dept        | varchar(50)  | YES  |     | NULL    |       |
+| designation | varchar(50)  | YES  |     | NULL    |       |
+| salary      | int(11)      | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+11 rows in set (0.00 sec)
+
+mysql> delimiter //
+mysql> create procedure desig_salary(in desig varchar(50),out total_salary int)
+    -> begin
+    -> select sum(salary) into total_salary
+    -> from employee where designation=desig;
+    -> end //
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> delimiter ;
+mysql> call desig_salary('tester',@total_salary);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select @total_salary as Tester_salary;
++---------------+
+| Tester_salary |
++---------------+
+|       1100000 |
++---------------+
+1 row in set (0.05 sec)
+
+mysql> call desig_salary('Software Engineer',@total_salary);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select @total_salary as Software_Engineer_Salary;
++--------------------------+
+| Software_Engineer_Salary |
++--------------------------+
+|                  1950000 |
++--------------------------+
+1 row in set (0.00 sec)
+
+mysql> call desig_salary('Admin',@total_salary);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select @total_salary as Admin_Salary;
++--------------+
+| Admin_Salary |
++--------------+
+|      1100000 |
++--------------+
+1 row in set (0.00 sec)
+
